@@ -16,7 +16,28 @@ var app = {
    // function, we must explicitly call 'app.receivedEvent(...);'
    onDeviceReady: function () {
       app.receivedEvent('deviceready');
+      app.takeshot();
    },
+
+   takeshot: function () {
+      $('#shot').click(function () {
+         navigator.camera.getPicture(onSuccess, onFail, {
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI
+         });
+
+         function onSuccess(imageURI) {
+            var image = document.getElementById('image');
+            image.src = imageURI;
+         }
+
+         function onFail(message) {
+            alert('Failed because: ' + message);
+         }
+      });
+   },
+
+
    // Update DOM on a Received Event
    receivedEvent: function (id) {
       var parentElement = document.getElementById(id);
@@ -28,6 +49,7 @@ var app = {
 
       console.log('Received Event: ' + id);
    }
+
 };
 
 app.initialize();

@@ -20,26 +20,23 @@ var app = {
    },
 
    findContacts: function () {
-      //console.log('test');
-      //alert('test');
-
       $('#findButton').click(function () {
          var finder = $('#find').val();
-         //document.getElementById('email').innerHTML = finder; // new Data();
+         // document.getElementById('email').innerHTML = finder; // new Date();
 
-         function onSucess(contacts) {
-            $('#name').html(contacts[0].name.giveName + ' ' + contacts[0].name.familyName);
+         function onSuccess(contacts) {
+            $('#name').html(contacts[0].name.givenName + ' ' + contacts[0].name.familyName);
          };
 
-         function onError(containerError) {
+         function onError(contactError) {
             alert('onError!');
          };
 
          //find all contacts
-         var options = new ContactFindOption();
+         var options = new ContactFindOptions();
          options.filter = finder;
          var fields = ["displayName", "name"];
-         navigator.contacts.find(fields, onSucess, onError, options);
+         navigator.contacts.find(fields, onSuccess, onError, options);
       });
    },
 

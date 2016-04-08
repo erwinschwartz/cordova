@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "fr.graphique_creation.training.cordova"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "fr.graphique_creation.training.cordova"
         }
     },
     "dependent_plugins": {}
