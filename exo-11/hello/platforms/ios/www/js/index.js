@@ -16,17 +16,28 @@ var app = {
    // function, we must explicitly call 'app.receivedEvent(...);'
    onDeviceReady: function () {
       app.receivedEvent('deviceready');
-      app.takepicture();
+      app.loadPicture();
    },
 
-   takepicture: function (evt) {
-      navigator.camera.getPicture(this.onCameraSuccess, this.onCameraError, this.cameraOptions);
-   },
-   onCameraSuccess: function (imageData) {
-      document.querySelector('#shot').src = imageData;
-   },
-   onCameraError: function (e) {
-      alert("onCameraError (maybe on Simu: camera disable!):" + e.code);
+   loadPicture: function () {
+      $('#album').click(function () {
+         function cameraSuccess(imageData) {
+            var image = document.getElementById('image');
+            image.src = "data:image/jpeg;base64," + imageData;
+         };
+
+         function cameraError(message) {
+            alert('onError!' + message);
+         };
+
+         var cameraOptions = {
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            popoverOptions: new CameraPopoverOptions(300, 300, 100, 100, Camera.PopoverArrowDirection.ARROW_ANY)
+         };
+
+         navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions);
+      });
    },
 
    // Update DOM on a Received Event
