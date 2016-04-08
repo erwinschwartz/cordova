@@ -16,27 +16,18 @@ var app = {
    // function, we must explicitly call 'app.receivedEvent(...);'
    onDeviceReady: function () {
       app.receivedEvent('deviceready');
-      app.takeshot();
+      app.takepicture();
    },
 
-   takeshot: function () {
-      $('#shot').click(function () {
-         navigator.camera.getPicture(onSuccess, onFail, {
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI
-         });
-
-         function onSuccess(imageURI) {
-            var image = document.getElementById('image');
-            image.src = imageURI;
-         }
-
-         function onFail(message) {
-            alert('Failed because: ' + message);
-         }
-      });
+   takepicture: function (evt) {
+      navigator.camera.getPicture(this.onCameraSuccess, this.onCameraError, this.cameraOptions);
    },
-
+   onCameraSuccess: function (imageData) {
+      document.querySelector('#shot').src = imageData;
+   },
+   onCameraError: function (e) {
+      alert("onCameraError (maybe on Simu: camera disable!):" + e.code);
+   },
 
    // Update DOM on a Received Event
    receivedEvent: function (id) {
